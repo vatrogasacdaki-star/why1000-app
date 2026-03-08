@@ -9,25 +9,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-    - name: Unzip project
-      run: unzip Why1000_Android_App.zip
+      - name: Unzip project
+        run: unzip Why1000_Android_App.zip
 
-    - name: Set up Java
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: '17'
+      - name: Enter project
+        run: cd Why1000_Android_App && ls
 
-    - name: Build APK
-      run: |
-        cd Why1000_Android_App
-        chmod +x gradlew
-        ./gradlew assembleDebug
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
 
-    - name: Upload APK
-      uses:  actions/upload-artifact@v4
-      with:
-        name: app-apk
-        path: Why1000_Android_App/app/build/outputs/apk/debug/app-debug.apk
+      - name: Build APK
+        run: |
+          cd Why1000_Android_App
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-apk
+          path: Why1000_Android_App/app/build/outputs/apk/debug/app-debug.apk
